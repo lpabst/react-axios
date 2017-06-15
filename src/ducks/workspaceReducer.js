@@ -11,11 +11,13 @@ const SHOW_CREATE_CUSTOMER = 'SHOW_CREATE_CUSTOMER';
 const CREATE_CUSTOMER = 'CREATE_CUSTOMER';
 const CREATE_CUSTOMER_PENDING = 'CREATE_CUSTOMER_PENDING';
 const CREATE_CUSTOMER_FULFILLED = 'CREATE_CUSTOMER_FULFILLED';
+const GET_CUSTOMER_FULFILLED = 'GET_CUSTOMER_FULFILLED';
+const GET_CUSTOMER_PENDING = 'GET_CUSTOMER_PENDING';
 
 export default function workspaceReducer( state = initialState, action ) {
   switch( action.type ) {
     case SHOW_CREATE_CUSTOMER:
-      return object.assign({}, state, {creating: true})
+      return Object.assign({}, state, {creating: true})
     case CREATE_CUSTOMER_FULFILLED:
       return {
         loading: false,
@@ -24,7 +26,18 @@ export default function workspaceReducer( state = initialState, action ) {
         creating: false
       }
 
-    // Get Customer - Pending
+    case GET_CUSTOMER_PENDING:
+      return {
+        loading: true,
+        customer: {},
+        initialLoad: false,
+        creating: false
+      }
+    case GET_CUSTOMER_FULFILLED:
+      return Object.assign({}, state, {
+        loading: false,
+        customer: action.payload
+      })
 
     // Get Customer - Fulfilled
 
@@ -47,6 +60,13 @@ export function showCreateCustomer(){
 export function createCustomer(promise){
   return {
     type: CREATE_CUSTOMER,
+    payload: promise
+  }
+}
+
+export function getCustomer(promise){
+  return {
+    type: GET_CUSTOMER,
     payload: promise
   }
 }
