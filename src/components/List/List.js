@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import './List.css';
 
+import { dispatchGetList } from './../../services/listService.js';
+
 import Customer from './Customer/Customer';
 import CreateCustomer from './CreateCustomer/CreateCustomer';
 
 class List extends Component {
+  componentDidMount(){
+    dispatchGetList();
+  }
+
   render() {
     const {
       loading,

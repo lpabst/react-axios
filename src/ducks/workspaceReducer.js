@@ -7,14 +7,22 @@ const initialState = {
   creating: false
 };
 
-// Action Types
+const SHOW_CREATE_CUSTOMER = 'SHOW_CREATE_CUSTOMER';
+const CREATE_CUSTOMER = 'CREATE_CUSTOMER';
+const CREATE_CUSTOMER_PENDING = 'CREATE_CUSTOMER_PENDING';
+const CREATE_CUSTOMER_FULFILLED = 'CREATE_CUSTOMER_FULFILLED';
 
-// Reducer
 export default function workspaceReducer( state = initialState, action ) {
   switch( action.type ) {
-    // Show Create Customer
-
-    // Create Customer - Fulfilled
+    case SHOW_CREATE_CUSTOMER:
+      return object.assign({}, state, {creating: true})
+    case CREATE_CUSTOMER_FULFILLED:
+      return {
+        loading: false,
+        initialLoad: true,
+        customer: {},
+        creating: false
+      }
 
     // Get Customer - Pending
 
@@ -24,8 +32,21 @@ export default function workspaceReducer( state = initialState, action ) {
 
     // Delete Customer - Fulfilled
 
-    default: return state;
+    default: 
+      return state;
   }
 }
 
-// Action Creators
+export function showCreateCustomer(){
+  return {
+    type: SHOW_CREATE_CUSTOMER,
+    payload: null
+  }
+}
+
+export function createCustomer(promise){
+  return {
+    type: CREATE_CUSTOMER,
+    payload: promise
+  }
+}
